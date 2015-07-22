@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+	<div id="myApp"></div>
+
+	<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+
+	<script type="text/jsx">
+		var MessageBox = React.createClass({
+			render: function() {
+				return (
+					<h1>Moo</h1>
+				);
+			}
+		});
+
+		React.render(<MessageBox/>, document.getElementById('myApp'));
+	</script>
+</body>
+</html>
