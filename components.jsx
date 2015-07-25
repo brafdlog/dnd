@@ -12,6 +12,18 @@ var DndApp = React.createClass({
 		});
 		this.setState({employees: updatedEmployees});
 	},
+	searchEmployees: function(searchTerm) {
+		var filteredEmployees;
+		// If searching for empty string reset the filtered employees
+		if (!searchTerm) {
+			filteredEmployees = undefined;
+		} else {
+			filteredEmployees = this.state.employees.filter(function (employee) {
+				return employee.name.toLowerCase().indexOf(searchTerm.toLowerCase()) != -1;
+			});
+		}
+		this.setState({filteredEmployees: filteredEmployees});
+	},
 	getInitialState: function() {
 		return {
 			filteredEmployees: null,
@@ -52,14 +64,15 @@ var DndApp = React.createClass({
 
 	render: function() {
 		var that = this;
-		var employeeComponents = this.state.employees.map(function(employee) {
+		var employees = this.state.filteredEmployees ? this.state.filteredEmployees : this.state.employees;
+		var employeeComponents = employees.map(function(employee) {
 			return <EmployeeStatusLine key={employee.id} name={employee.name} status={employee.status} imageSrc={employee.image} team={employee.team} id={employee.id} isCurrentUser={employee.isCurrentUser} employeeStatusToggled={that.employeeStatusToggled}/>
 		});
 		return (
 			<div className="appWrapper">
 				<div className="row topRow">
 					<div className="col-md-offset-1 col-md-4">
-						<SearchBox/>
+						<SearchBox onSearchClicked={this.searchEmployees}/>
 					</div>
 				</div>
 				<div className="row content">
@@ -78,6 +91,11 @@ var SearchBox = React.createClass({
 			
 		}
 	},
+	searchClicked: function(event) {
+		event.preventDefault();
+		var searchInput = this.refs.searchBox.getDOMNode();
+		this.props.onSearchClicked(searchInput.value);
+	},
 
 	render: function() {
 		return (
@@ -87,7 +105,7 @@ var SearchBox = React.createClass({
 					    <input type="text" className="form-control" placeholder="Name" ref="searchBox" />
 					</div>
 					<div className="col-md-3">
-						<button className="btn btn-default">Search</button>
+						<button className="btn btn-default" onClick={this.searchClicked}>Search</button>
 					</div>
 				</form>
 			</div>
