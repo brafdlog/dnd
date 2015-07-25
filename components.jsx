@@ -7,7 +7,16 @@ var DndApp = React.createClass({
 				} else {
 					employee.status = 'free';
 				}
+				
+				// update firebase
+				new Firebase('https://duda-dnd.firebaseio.com/employees/' + employeeId).update({status: employee.status}, function(error) {
+					if (error) {
+						alert('Failed updating status');
+						console.log('Failed updating status' + error);
+					}
+				});
 			}
+
 			return employee;
 		});
 		this.setState({employees: updatedEmployees});
