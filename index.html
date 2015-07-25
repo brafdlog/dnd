@@ -16,6 +16,7 @@
   <body>
     <div id="myApp"></div>
 
+	<script src='./js/firebase.js'></script>
 	<script src="./js/react-with-addons.js"></script>
 	<script src="./js/JSXTransformer.js"></script>
 	<script src="./js/jquery-2.1.4.min.js"></script>
@@ -23,6 +24,7 @@
 	<script src="./js/bootstrap.min.js"></script>
 	<script src="./components.jsx" type="text/jsx"></script>
 	<script type="text/jsx">
+		var firebaseRef = new Firebase('https://duda-dnd.firebaseio.com');
 		var dndAppInstance = React.render(<DndApp/>, document.getElementById('myApp'));
 	</script>
   </body>

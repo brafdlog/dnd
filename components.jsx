@@ -27,39 +27,15 @@ var DndApp = React.createClass({
 	getInitialState: function() {
 		return {
 			filteredEmployees: null,
-			employees :[{
-							id: 1,
-							name: 'Jonathan Goldfarb',
-							image: '',
-							team: 'core',
-							status: 'free',
-							isCurrentUser: true
-						},
-						{
-							id: 2,
-							name: 'Eyal Ella',
-							image: '',
-							team: 'application',
-							status: 'busy',
-							isCurrentUser: false
-						},
-						{
-							id: 3,
-							name: 'Ronny Shapiro',
-							image: '',
-							team: 'core',
-							status: 'busy',
-							isCurrentUser: false
-						},
-						{
-							id: 4,
-							name: 'Liad Yosef',
-							image: '',
-							team: 'application',
-							status: 'free',
-							isCurrentUser: false
-						}
-					]}
+			employees :[]
+		}
+	},
+
+	componentDidMount: function() {
+		var that = this;
+		firebaseRef.child("employees").on("value", function(snapshot) {
+  			that.setState({employees: snapshot.val()});
+		});
 	},
 
 	render: function() {
