@@ -36,7 +36,8 @@ var DndApp = React.createClass({
 	getInitialState: function() {
 		return {
 			filteredEmployees: null,
-			employees :[]
+			employees :[],
+			currentUserId: 1
 		}
 	},
 
@@ -51,7 +52,8 @@ var DndApp = React.createClass({
 		var that = this;
 		var employees = this.state.filteredEmployees ? this.state.filteredEmployees : this.state.employees;
 		var employeeComponents = employees.map(function(employee) {
-			return <EmployeeStatusLine key={employee.id} name={employee.name} status={employee.status} imageSrc={employee.image} team={employee.team} id={employee.id} isCurrentUser={employee.isCurrentUser} employeeStatusToggled={that.employeeStatusToggled}/>
+			var isCurrentUser = employee.id === that.state.currentUserId;
+			return <EmployeeStatusLine key={employee.id} name={employee.name} status={employee.status} imageSrc={employee.image} team={employee.team} id={employee.id} isCurrentUser={isCurrentUser} employeeStatusToggled={that.employeeStatusToggled}/>
 		});
 		return (
 			<div className="appWrapper">
