@@ -33,6 +33,9 @@ var DndApp = React.createClass({
 		}
 		this.setState({filteredEmployees: filteredEmployees});
 	},
+	clearSearch: function() {
+		this.setState({filteredEmployees: undefined});	
+	},
 	getInitialState: function() {
 		return {
 			filteredEmployees: null,
@@ -50,7 +53,11 @@ var DndApp = React.createClass({
 
 	render: function() {
 		var that = this;
-		var employees = this.state.filteredEmployees ? this.state.filteredEmployees : this.state.employees;
+		var searching = false;
+		if (this.state.filteredEmployees) {
+			searching = true;
+		}
+		var employees = searching ? this.state.filteredEmployees : this.state.employees;
 		var employeeComponents = employees.map(function(employee) {
 			var isCurrentUser = employee.id === that.state.currentUserId;
 			return <EmployeeStatusLine key={employee.id} name={employee.name} status={employee.status} imageSrc={employee.image} team={employee.team} id={employee.id} isCurrentUser={isCurrentUser} employeeStatusToggled={that.employeeStatusToggled}/>
@@ -59,7 +66,7 @@ var DndApp = React.createClass({
 			<div className="appWrapper">
 				<div className="row topRow">
 					<div className="col-md-offset-1 col-md-4">
-						<SearchBox onSearchClicked={this.searchEmployees}/>
+						<SearchBox onSearchClicked={this.searchEmployees} searching={searching} clearSearchClicked={this.clearSearch}/>
 					</div>
 				</div>
 				<div className="row content">
@@ -75,7 +82,7 @@ var DndApp = React.createClass({
 var SearchBox = React.createClass({
 	getDefaultProps: function() {
 		return {
-			
+
 		}
 	},
 	searchClicked: function(event) {
@@ -83,13 +90,21 @@ var SearchBox = React.createClass({
 		var searchInput = this.refs.searchBox.getDOMNode();
 		this.props.onSearchClicked(searchInput.value);
 	},
+	clearSearchClicked: function(event) {
+		this.refs.searchBox.getDOMNode().value = '';
+		this.props.clearSearchClicked();
+	},
 
 	render: function() {
+		var clearSearchIcon = this.props.searching ? <i className="fa fa-times fa-5 clearSearchIcon" onClick={this.clearSearchClicked}></i> : '';
 		return (
 			<div className="row">
 				<form>
 					<div className="col-md-5">
 					    <input type="text" className="form-control" placeholder="Name" ref="searchBox" />
+					</div>
+					<div className="col-md-1 clearSearchIconColumn">
+					    {clearSearchIcon}
 					</div>
 					<div className="col-md-3">
 						<button className="btn btn-default" onClick={this.searchClicked}>Search</button>
