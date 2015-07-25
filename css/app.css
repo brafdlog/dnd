@@ -22,6 +22,10 @@ body {
 	color: #F56639;
 }
 
-.employeeStatusLine .fa-cog {
+.employeeStatusLine .fa-hand-o-right {
 	color: #5E5E5E;
+}
+
+.statusIcon.isCurrentUser {
+
 }

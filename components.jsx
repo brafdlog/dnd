@@ -1,4 +1,16 @@
 var DndApp = React.createClass({
+	employeeStatusToggled: function(employeeId) {
+		var updatedEmployees = this.props.employees.map(function(employee) {
+			if (employee.id === employeeId) {
+				if (employee.status === 'free') {
+					employee.status = 'busy';
+				} else {
+					employee.status = 'free';
+				}
+			}
+		});
+		this.setState({employees: updatedEmployees});
+	},
 	getDefaultProps: function() {
 		return {
 			employees :[{
@@ -37,9 +49,9 @@ var DndApp = React.createClass({
 	},
 
 	render: function() {
-		
+		var that = this;
 		var employeeComponents = this.props.employees.map(function(employee) {
-			return <EmployeeStatusLine key={employee.id} name={employee.name} status={employee.status} imageSrc={employee.image} team={employee.team} id={employee.id} isCurrentUser={employee.isCurrentUser}/>
+			return <EmployeeStatusLine key={employee.id} name={employee.name} status={employee.status} imageSrc={employee.image} team={employee.team} id={employee.id} isCurrentUser={employee.isCurrentUser} employeeStatusToggled={that.employeeStatusToggled}/>
 		});
 		return (
 			<div className="appWrapper">
@@ -95,11 +107,11 @@ var EmployeeStatusLine = React.createClass({
 	},
 
 	render: function() {
-		var settingsCog = this.props.isCurrentUser ? <i className="fa fa-cog"></i> : '';
+		var currentEmployeeIndicator = this.props.isCurrentUser ? <i className="fa fa-hand-o-right"></i> : '';
 		return (
 			<div className="row employeeStatusLine">
 				<div className="col-md-1">
-					{settingsCog}
+					{currentEmployeeIndicator}
 				</div>
 				<div className="col-md-1">
 					<EmployeeImage imageSrc={this.props.imageSrc} name={this.props.name} />
@@ -108,7 +120,7 @@ var EmployeeStatusLine = React.createClass({
 					{this.props.name} 
 				</div>
 				<div className="col-md-1">
-					<EmployeeStatus status={this.props.status}/>
+					<EmployeeStatus id={this.props.id} status={this.props.status} isCurrentUser={this.props.isCurrentUser} employeeStatusToggled={this.props.employeeStatusToggled}/>
 				</div>
 				
 			</div>
@@ -141,14 +153,23 @@ var EmployeeStatus = React.createClass({
 	getDefaultProps: function() {
 		return {
 			status: 'free',
+			isCurrentUser: false,
+			id: null
 		}
+	},
+
+	onStatusClicked: function(event) {
+		if (this.props.isCurrentUser) {
+			this.props.employeeStatusToggled(this.props.id);	
+		}
+		
 	},
 
 	render: function() {
 		var iconClass = this.props.status === 'free' ? 'fa fa-comments-o' : 'fa fa-headphones';
-		iconClass += ' fa-6';
+		iconClass += ' fa-6 statusIcon';
 		return (
-			<i className={iconClass}></i>
+			<i className={iconClass} onClick={this.onStatusClicked}></i>
 		);
 	}
 });
