@@ -1,6 +1,6 @@
 var DndApp = React.createClass({
 	employeeStatusToggled: function(employeeId) {
-		var updatedEmployees = this.props.employees.map(function(employee) {
+		var updatedEmployees = this.state.employees.map(function(employee) {
 			if (employee.id === employeeId) {
 				if (employee.status === 'free') {
 					employee.status = 'busy';
@@ -8,11 +8,13 @@ var DndApp = React.createClass({
 					employee.status = 'free';
 				}
 			}
+			return employee;
 		});
 		this.setState({employees: updatedEmployees});
 	},
-	getDefaultProps: function() {
+	getInitialState: function() {
 		return {
+			filteredEmployees: null,
 			employees :[{
 							id: 1,
 							name: 'Jonathan Goldfarb',
@@ -50,7 +52,7 @@ var DndApp = React.createClass({
 
 	render: function() {
 		var that = this;
-		var employeeComponents = this.props.employees.map(function(employee) {
+		var employeeComponents = this.state.employees.map(function(employee) {
 			return <EmployeeStatusLine key={employee.id} name={employee.name} status={employee.status} imageSrc={employee.image} team={employee.team} id={employee.id} isCurrentUser={employee.isCurrentUser} employeeStatusToggled={that.employeeStatusToggled}/>
 		});
 		return (
