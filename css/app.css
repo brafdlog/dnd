@@ -1,0 +1,27 @@
+body {
+	background-color: #F2F2F2;
+}
+
+.topRow {
+	padding-top: 13px;
+  	margin-bottom: 20px;
+  	padding-bottom: 13px;
+  	background-color: #4285F4;
+}
+
+.employeeStatusLine {
+	font-size: 23px;
+	margin: 10px;
+}
+
+.employeeStatusLine .fa-comments-o {
+	color: #3C80F6;
+}
+
+.employeeStatusLine .fa-headphones {
+	color: #F56639;
+}
+
+.employeeStatusLine .fa-cog {
+	color: #5E5E5E;
+}

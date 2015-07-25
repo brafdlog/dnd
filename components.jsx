@@ -6,28 +6,32 @@ var DndApp = React.createClass({
 							name: 'Jonathan Goldfarb',
 							image: '',
 							team: 'core',
-							status: 'free'
+							status: 'free',
+							isCurrentUser: true
 						},
 						{
 							id: 2,
 							name: 'Eyal Ella',
 							image: '',
 							team: 'application',
-							status: 'busy'
+							status: 'busy',
+							isCurrentUser: false
 						},
 						{
 							id: 3,
 							name: 'Ronny Shapiro',
 							image: '',
 							team: 'core',
-							status: 'busy'
+							status: 'busy',
+							isCurrentUser: false
 						},
 						{
 							id: 4,
 							name: 'Liad Yosef',
 							image: '',
 							team: 'application',
-							status: 'free'
+							status: 'free',
+							isCurrentUser: false
 						}
 					]}
 	},
@@ -35,17 +39,17 @@ var DndApp = React.createClass({
 	render: function() {
 		
 		var employeeComponents = this.props.employees.map(function(employee) {
-			return <EmployeeStatusLine key={employee.id} name={employee.name} status={employee.status} imageSrc={employee.image} team={employee.team} id={employee.id}/>
+			return <EmployeeStatusLine key={employee.id} name={employee.name} status={employee.status} imageSrc={employee.image} team={employee.team} id={employee.id} isCurrentUser={employee.isCurrentUser}/>
 		});
 		return (
 			<div className="appWrapper">
 				<div className="row topRow">
-					<div className="col-md-4">
+					<div className="col-md-offset-1 col-md-4">
 						<SearchBox/>
 					</div>
 				</div>
 				<div className="row content">
-					<div className="col-md-12">
+					<div className="col-md-offset-2 col-md-8">
 						{employeeComponents}
 					</div>
 				</div>
@@ -85,20 +89,25 @@ var EmployeeStatusLine = React.createClass({
 			imageSrc: '',
 			name: '',
 			team: '',
-			status: ''
+			status: '',
+			isCurrentUser: false
 		}
 	},
 
 	render: function() {
+		var settingsCog = this.props.isCurrentUser ? <i className="fa fa-cog"></i> : '';
 		return (
-			<div className="row">
+			<div className="row employeeStatusLine">
+				<div className="col-md-1">
+					{settingsCog}
+				</div>
 				<div className="col-md-1">
 					<EmployeeImage imageSrc={this.props.imageSrc} name={this.props.name} />
 				</div>
-				<div className="col-md-2">
+				<div className="col-md-3">
 					{this.props.name} 
 				</div>
-				<div className="col-md-3">
+				<div className="col-md-1">
 					<EmployeeStatus status={this.props.status}/>
 				</div>
 				
