@@ -1,5 +1,7 @@
 var React = require('react');
 
+var maxAutocompleteOptions = 4;
+
 var LoginPopup = React.createClass({
 	getInitialState: function() {
 		return {
@@ -50,10 +52,13 @@ var LoginPopup = React.createClass({
 		}
 		var inputText = this.refs.employeeNameLoginInput.getDOMNode().value;
 		var employeesWithMatchingName;
-		if (inputText && inputText.length > 1) {
+		if (inputText && inputText.length > 0) {
 			employeesWithMatchingName = this.props.employees.filter(function(emp) {
 				return emp.name.toLowerCase().indexOf(inputText.toLowerCase()) != -1;
 			});
+			if (employeesWithMatchingName.length > maxAutocompleteOptions) {
+				employeesWithMatchingName = employeesWithMatchingName.slice(0, maxAutocompleteOptions);
+			}
 		} else {
 			employeesWithMatchingName = [];
 		}
