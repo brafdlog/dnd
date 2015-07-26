@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "browserify -t reactify js/app.js > build/app.js",
+    "build": "browserify -t reactify js/app.js > build/app.js",
+    "build_prod": "browserify -t reactify js/app.js | uglifyjs > build/app.js",
     "watch": "watchify -v -t reactify js/app.js -o build/app.js"
   },
   "repository": {
@@ -22,6 +23,7 @@
     "browserify": "^11.0.0",
     "react": "^0.13.3",
     "reactify": "^1.1.1",
+    "uglify-js": "^2.4.24",
     "watchify": "^3.3.0"
   },
   "dependencies": {
