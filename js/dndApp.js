@@ -56,7 +56,7 @@ var DndApp = React.createClass({
 	},
 	logout: function(event) {
 		event.preventDefault();
-		this.setState({currentUserId: undefined});
+		this.setState({currentUserId: undefined, filteredEmployees: undefined});
 		localStorage.removeItem('currentEmployeeId');	
 	},
 	componentDidMount: function() {
