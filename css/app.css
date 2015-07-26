@@ -51,9 +51,9 @@ body {
     top: 30%;
     width: 350px;
     margin-left: -175px;
-    padding-top: 20px;
+    padding-top: 40px;
     padding-left: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 170px;
     background-color: white;
 }
 
@@ -63,4 +63,20 @@ body {
 
 .employeeIcon {
 	font-size: 35px;
+}
+
+.autocompleteList {
+    position: absolute;
+    margin-top: 7px;
+    list-style-type: none;
+    padding-left: 10px;
+}
+
+.autocompleteList > li:hover {
+    background-color: #E0EAF1;
+    cursor: pointer;
+}
+
+.autocompleteList > li.selected {
+    background-color: #E0EAF1;
 }
