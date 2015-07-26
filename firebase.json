@@ -1,0 +1,9 @@
+{
+  "firebase": "duda-dnd",
+  "public": ".",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
