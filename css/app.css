@@ -56,3 +56,11 @@ body {
     padding-bottom: 20px;
     background-color: white;
 }
+
+.employeeImage {
+	width: 35px;
+}
+
+.employeeIcon {
+	font-size: 35px;
+}

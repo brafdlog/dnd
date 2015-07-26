@@ -178,9 +178,9 @@ var EmployeeImage = React.createClass({
 	render: function() {
 		var employeeImage;
 		if (this.props.imageSrc) {
-			employeeImage = <img src={this.props.imageSrc} alt={this.props.name}/>
+			employeeImage = <img className="employeeImage" src={this.props.imageSrc} alt={this.props.name}/>
 		} else {
-			employeeImage = <i className="fa fa-user fa-6" ></i>
+			employeeImage = <i className="fa fa-user fa-6 employeeIcon" ></i>
 		}
 		return (
 			employeeImage
