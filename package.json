@@ -1,0 +1,33 @@
+{
+  "name": "dnd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "browserify -t reactify js/app.js > build/app.js",
+    "watch": "watchify -v -t reactify js/app.js -o build/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brafdlog/dnd.git"
+  },
+  "author": "Jonathan Goldfarb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brafdlog/dnd/issues"
+  },
+  "homepage": "https://github.com/brafdlog/dnd#readme",
+  "devDependencies": {
+    "browserify": "^11.0.0",
+    "react": "^0.13.3",
+    "reactify": "^1.1.1",
+    "watchify": "^3.3.0"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "firebase": "^2.2.7",
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.0"
+  }
+}
