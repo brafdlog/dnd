@@ -18,7 +18,7 @@ var LoginPopup = React.createClass({
 			<div className="loginPopupContainer">		
 				<form className="form-inline">
 				  <div className="form-group">
-				    <input ref="employeeNameLoginInput" type="text" className="form-control" id="employeeNameLoginInput" placeholder="Name"/>
+				    <input ref="employeeNameLoginInput" type="text" className="form-control" id="employeeNameLoginInput" placeholder="Full Name"/>
 				  </div>
 				  <button type="submit" className="btn btn-default" onClick={this.loginButtonClicked}>Login</button>
 				</form>
