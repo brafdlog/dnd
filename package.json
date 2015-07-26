@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify -t reactify js/app.js > build/app.js",
     "build_prod": "browserify -t reactify js/app.js | uglifyjs > build/app.js",
-    "watch": "watchify -v -t reactify js/app.js -o build/app.js"
+    "watch": "watchify -v -t reactify js/app.js -o build/app.js",
+    "deploy": "npm run build_prod && firebase deploy"
   },
   "repository": {
     "type": "git",
