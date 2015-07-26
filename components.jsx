@@ -40,10 +40,18 @@ var DndApp = React.createClass({
 		return {
 			filteredEmployees: null,
 			employees :[],
-			currentUserId: 1
+			currentUserId: localStorage.getItem('currentEmployeeId')
 		}
 	},
-
+	login: function(employeeId) {
+		this.setState({currentUserId: employeeId});
+		localStorage.setItem('currentEmployeeId', employeeId);
+	},
+	logout: function(event) {
+		event.preventDefault();
+		this.setState({currentUserId: undefined});
+		localStorage.removeItem('currentEmployeeId');	
+	},
 	componentDidMount: function() {
 		var that = this;
 		firebaseRef.child("employees").on("value", function(snapshot) {
@@ -59,14 +67,23 @@ var DndApp = React.createClass({
 		}
 		var employees = searching ? this.state.filteredEmployees : this.state.employees;
 		var employeeComponents = employees.map(function(employee) {
-			var isCurrentUser = employee.id === that.state.currentUserId;
+			var isCurrentUser = employee.id == that.state.currentUserId;
 			return <EmployeeStatusLine key={employee.id} name={employee.name} status={employee.status} imageSrc={employee.image} team={employee.team} id={employee.id} isCurrentUser={isCurrentUser} employeeStatusToggled={that.employeeStatusToggled}/>
 		});
+
+		var loginPopup = this.state.currentUserId ? '' : 
+			<div className="loginPopupContainer">
+				<LoginPopup onLogin={this.login} employees={this.state.employees}/>
+			</div>								  
 		return (
 			<div className="appWrapper">
+				{loginPopup}
 				<div className="row topRow">
 					<div className="col-md-offset-1 col-md-4">
 						<SearchBox onSearchClicked={this.searchEmployees} searching={searching} clearSearchClicked={this.clearSearch}/>
+					</div>
+					<div className="col-md-offset-5 col-md-1">
+						<button className="logOutLink btn btn-default btn-sm" onClick={this.logout} type="button">Logout</button>
 					</div>
 				</div>
 				<div className="row content">
@@ -192,6 +209,33 @@ var EmployeeStatus = React.createClass({
 		iconClass += ' fa-6 statusIcon';
 		return (
 			<i className={iconClass} onClick={this.onStatusClicked}></i>
+		);
+	}
+});
+
+var LoginPopup = React.createClass({
+	loginButtonClicked: function(event) {
+		event.preventDefault();
+		var employeeName = this.refs.employeeNameLoginInput.getDOMNode().value;
+		var employees = this.props.employees;
+		var employeesWithName = employees.filter(function(emp) {
+			return emp.name.toLowerCase() === employeeName.toLowerCase();
+		});
+		if (employeesWithName && employeesWithName.length > 0) {
+			var loggedInId = employeesWithName[0].id;
+			this.props.onLogin(loggedInId);
+		}
+	},
+	render: function() {
+		return (
+			<div className="loginPopupContainer">		
+				<form className="form-inline">
+				  <div className="form-group">
+				    <input ref="employeeNameLoginInput" type="text" className="form-control" id="employeeNameLoginInput" placeholder="Name"/>
+				  </div>
+				  <button type="submit" className="btn btn-default" onClick={this.loginButtonClicked}>Login</button>
+				</form>
+			</div>
 		);
 	}
 });
