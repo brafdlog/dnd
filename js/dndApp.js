@@ -51,8 +51,10 @@ var DndApp = React.createClass({
 		}
 	},
 	login: function(employeeId) {
-		this.setState({currentUserId: employeeId});
+		var employeesCopy = this.state.employees.slice();
+		this.sortEmployees(employeesCopy, employeeId);
 		localStorage.setItem('currentEmployeeId', employeeId);
+		this.setState({currentUserId: employeeId, employees: employeesCopy});
 	},
 	logout: function(event) {
 		event.preventDefault();
@@ -62,10 +64,23 @@ var DndApp = React.createClass({
 	componentDidMount: function() {
 		var that = this;
 		new Firebase('https://duda-dnd.firebaseio.com').child("employees").on("value", function(snapshot) {
-  			that.setState({employees: snapshot.val()});
+  			var employees = snapshot.val();
+  			that.sortEmployees(employees, that.state.currentUserId);
+  			that.setState({employees: employees});
 		});
 	},
-
+	sortEmployees: function(employees, currentUserId) {
+		var that = this;
+		employees.sort(function(emp1,emp2) {
+			if (currentUserId == emp1.id) {
+				return -1;
+			}
+			if (currentUserId == emp2.id) {
+				return 1;
+			}
+			return emp1.name.localeCompare(emp2.name);
+		});
+	},
 	render: function() {
 		var that = this;
 		var searching = false;
