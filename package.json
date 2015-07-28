@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify -t reactify js/app.js > build/app.js",
-    "build_prod": "browserify -t reactify js/app.js | uglifyjs > build/app.js",
-    "watch": "watchify -v -t reactify js/app.js -o build/app.js",
+    "build": "webpack",
+    "build_prod": "webpack --optimize-minimize",
+    "watch": "webpack-dev-server --inline --hot --progress --colors",
     "deploy": "npm run build_prod && firebase deploy"
   },
   "repository": {
@@ -21,11 +21,15 @@
   },
   "homepage": "https://github.com/brafdlog/dnd#readme",
   "devDependencies": {
-    "browserify": "^11.0.0",
+    "file-loader": "^0.8.4",
+    "jshint": "^2.8.0",
+    "jshint-loader": "^0.8.3",
+    "jsx-loader": "^0.13.2",
     "react": "^0.13.3",
-    "reactify": "^1.1.1",
     "uglify-js": "^2.4.24",
-    "watchify": "^3.3.0"
+    "uglify-loader": "^1.2.0",
+    "url-loader": "^0.5.6",
+    "webpack": "^1.10.5"
   },
   "dependencies": {
     "bootstrap": "^3.3.5",
