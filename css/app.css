@@ -26,8 +26,8 @@ body {
 	color: #5E5E5E;
 }
 
-.statusIcon.isCurrentUser {
-
+.currentUser .statusIcon:hover {
+    cursor: pointer;
 }
 
 .clearSearchIconColumn {

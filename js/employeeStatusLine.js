@@ -17,8 +17,12 @@ var EmployeeStatusLine = React.createClass({
 
 	render: function() {
 		var currentEmployeeIndicator = this.props.isCurrentUser ? <i className="fa fa-hand-o-right"></i> : '';
+		var rowClassName = "row employeeStatusLine ";
+		if (this.props.isCurrentUser) {
+			rowClassName += "currentUser";
+		}
 		return (
-			<div className="row employeeStatusLine">
+			<div className={rowClassName}>
 				<div className="col-md-1">
 					{currentEmployeeIndicator}
 				</div>
