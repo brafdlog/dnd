@@ -7,7 +7,7 @@ module.exports = {
 	devtool: 'source-map',
 	module: {
 		preLoaders: [
-			// {test: /\.js$/, exclude: /node_modules/, loader: 'jshint-loader'}
+
 		],
 		loaders: [
 			// Test is the regex and loader is the loaders to run for this regex.
